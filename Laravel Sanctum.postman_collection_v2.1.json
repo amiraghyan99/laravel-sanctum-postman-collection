@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "d87fa122-0ffc-42e5-b122-565dcfc4cce1",
+		"name": "Laravel Sanctum",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14371191",
+		"_collection_link": "https://bold-capsule-22716.postman.co/workspace/Gev~7bbfe4e7-3419-4634-9f42-5631c8ce6b8b/collection/14371191-d87fa122-0ffc-42e5-b122-565dcfc4cce1?action=share&source=collection_link&creator=14371191"
+	},
+	"item": [
+		{
+			"name": "CSRF-COOKIE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/sanctum/csrf-cookie",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"sanctum",
+						"csrf-cookie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "test@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{apiUrl}}/login",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Test2",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "test2@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{apiUrl}}/register",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/logout",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/user",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const jar = pm.cookies.jar();",
+					"pm.request.addHeader({",
+					"    key: \"Accept\",",
+					"    value: \"application/json\"",
+					"});",
+					"jar.get(pm.environment.get(\"frontendUrl\"), \"XSRF-TOKEN\", (err, cookie) => {",
+					"    if(err) console.log(err, cookie);",
+					"",
+					"    pm.request.addHeader({",
+					"        key: \"X-XSRF-TOKEN\",",
+					"        value: cookie",
+					"    });",
+					"    pm.request.addHeader({",
+					"        key: \"referer\",",
+					"        value: pm.environment.get(\"frontendUrl\")",
+					"    })",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
